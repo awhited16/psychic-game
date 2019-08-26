@@ -13,8 +13,13 @@ $(document).ready(function() {
 
     var winsText = document.getElementById("win-number");
     var lossesText = document.getElementById("loss-number");
-    var guessesLeftText = document.getElementById("guesses");
-    var guessText = document.getElementById("guesses-left");
+    var guessLeftText = document.getElementById("guesses-left");
+    var guessText = document.getElementById("guesses");
+
+    winsText.textContent = "Wins: " + wins;
+    lossesText.textContent = "Losses: " + losses;
+    guessLeftText.textContent = "Guesses Left: " + guessesLeft;
+    guessText.textContent = "Your Guesses so far: " + guess
 
     //Have computer select random letter
 
@@ -30,25 +35,30 @@ $(document).ready(function() {
         if (guess === computerLetter) {
             console.log("yes");
             wins++;
-        } else if (guessesLeft = 9) {
+        } else if (guessesLeft < 9) {
+            console.log("other guess");
+            $(guessText).append(", "+ guessText);
+            guessesLeft--;
+        } else {
             console.log("first guess");
             guessesLeft--;
-            $(".guesses").append(guess);
-        } else (guessesLeft < 9) 
-            console.log("other guess");
-            $(".guesses").append(", "+ guess)
-            guessesLeft--;
+            $(guessText).append(guessText);
+        }
 
+        //Update game information
+        winsText.textContent = "Wins: " + wins;
+        lossesText.textContent = "Losses: " + losses;
+        guessLeftText.textContent = "Guesses Left: " + guessesLeft;
+        guessText.textContent = "Your Guesses so far: " + guess
 
 
         console.log(guess);
+        console.log("guessesLeft: " + guessesLeft);
     });
 
     //Display wins, losses, and guess info
 
-    winsText = "Wins: " + wins
-    lossesText = "Losses: " + losses
-    guessLeftText = "Guesses Left: " + guessesLeft
+
 
 
 
