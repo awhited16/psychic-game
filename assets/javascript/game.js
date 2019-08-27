@@ -1,11 +1,15 @@
 $(document).ready(function() {
 
+
+
+    //List of starting number of wins and losses
+    var wins = 0;
+    var losses = 0;
+
     function initialize () {
 
-        //List of variables including alphabet array and computer random selection
-        var wins = 0;
-        var losses = 0;
-        var guess = "";
+        //List of variables that restart at the end of each game
+        var guess = [];
         var guessesLeft = 9;
         var options = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
         var computerLetter = options[Math.floor(Math.random()*options.length)];
@@ -21,7 +25,7 @@ $(document).ready(function() {
         winsText.textContent = "Wins: " + wins;
         lossesText.textContent = "Losses: " + losses;
         guessLeftText.textContent = "Guesses Left: " + guessesLeft;
-        guessText.textContent = "Your Guesses so far: " + guess
+        guessText.textContent = "Your Guesses so far: ";
 
 
         console.log(computerLetter);
@@ -37,32 +41,45 @@ $(document).ready(function() {
 
             guessText.textContent = "Your Guesses so far: " + guess
 
+
+            //add win if guess is correct, restart game
+
             if (guess === computerLetter) {
                 console.log("yes");
                 wins++;
-            } else if (guessesLeft < 9) {
+                guessesLeft = 9;
+                initialize ();
+            }
+            
+
+            //add guess to list of guesses, reduce number of guesses
+
+            if (guess !== computerLetter && guessesLeft < 9) {
                 console.log("other guess");
                 guessesLeft--;
-                $(guessText).append(", "+ guessText);
-            } else {
-                console.log("first guess");
-                guessesLeft--;
-                $(guessText).append(guessText);
+                $("#guesses").append(", "+ guess);
             }
+
+            if (guess !== computerLetter && guessesLeft === 9) {
+                console.log("first guess");
+                guessesLeft = 8;
+                $("#guesses").push(guess);
+            }
+
+            
+            //restarts game, adding one to number of losses
+
+            if (guessesLeft === 0) {
+                losses++;
+                guessesLeft = 9;
+                initialize ();
+            }
+
 
             //Update game information
             winsText.textContent = "Wins: " + wins;
             lossesText.textContent = "Losses: " + losses;
             guessLeftText.textContent = "Guesses Left: " + guessesLeft;
-            
-
-            console.log(guess);
-            console.log("guessesLeft: " + guessesLeft);
-
-            if (guessesLeft = 0) {
-                losses++;
-                initialize ()
-            }
 
         });
 
@@ -70,8 +87,6 @@ $(document).ready(function() {
     }
 
     initialize ()
-
-    //Display wins, losses, and guess info
 
 
 
